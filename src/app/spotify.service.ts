@@ -20,12 +20,12 @@ export class SpotifyService {
   }
   
   searchMusic(str: string, type = 'artist') {
-    const accessToken = 'BQC2g1bTGX1y0bGf4x3GhLrhfk44khKZdE-I050Fpq3WQHykZfclPcRrIvrerJ57wlceB1rK4fSWED-64pw';
+    const accessToken = 'ZTNmNjVkODliNjdiNDVlYmEzYWZjYTRkOTc1OTUyNzU6MjAzOGFhNDkyMTNhNGZhMTg2MDY4YWMyMDMxMjk3Zjg=';
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization',  'Bearer ' + accessToken);
     let options = new RequestOptions({ headers: headers });
-    this.searchUrl = 'https://api.spotify.com/v1/search?query=' + str + '&offset=0&limit=20&type=' + type + '&market=US';
+    this.searchUrl = 'https://api.spotify.com/v1/search?query='+str+'&offset=0&limit=20&type='+type+'&market=US';
     console.log(this.searchUrl)
     return this._http.get(this.searchUrl, options)
       .pipe(
