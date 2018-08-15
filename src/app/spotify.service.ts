@@ -1,30 +1,42 @@
 import { Injectable } from '@angular/core';
+/*
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
-//import 'rxjs/Rx';
-/*
-import {Http} from '@angular/http';
-import { map } from 'rxjs/operators';
 */
+import { map } from 'rxjs/operators';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 
+import { Observable, of } from 'rxjs'; //Observable returned with asynch operation
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
   private searchUrl: string;
-  constructor(private _http: HttpClient) {
+
+  constructor(private _http: Http) {
 
   }
   
-  seachMusic(str:string, type='artist'){
+  searchMusic(str: string, type = 'artist') {
+    const accessToken = 'BQC2g1bTGX1y0bGf4x3GhLrhfk44khKZdE-I050Fpq3WQHykZfclPcRrIvrerJ57wlceB1rK4fSWED-64pw';
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization',  'Bearer ' + accessToken);
+    let options = new RequestOptions({ headers: headers });
     this.searchUrl = 'https://api.spotify.com/v1/search?query=' + str + '&offset=0&limit=20&type=' + type + '&market=US';
-    console.log(this._http.get(this.searchUrl))
-    return this._http.get(this.searchUrl)
-          .pipe(map(res => res.json()));
+    console.log(this.searchUrl)
+    return this._http.get(this.searchUrl, options)
+      .pipe(
+        tap(res => console.log(this)),
+      catchError((e) => this.handleError(e)),
+      map(res => res.json())
+      );
+  }
+  private handleError2(error: any): Observable<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return of(error.message || error);
   }
 /*
 
@@ -37,5 +49,8 @@ export class SpotifyService {
         );
     } 
     */
-  }
+   private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+ }
 }

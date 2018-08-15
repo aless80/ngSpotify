@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {SpotifyService} from './spotify.service';
 import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
 
 @Component({
-  //moduleId: module.id,
   selector: 'app-root',
   templateUrl: './app.component.html',
-  //directives: [NavbarComponent],
   styleUrls: ['./app.component.css'],
-  entryComponents: [SearchComponent, AboutComponent]
+  entryComponents: [SearchComponent, AboutComponent],
+  providers: [SpotifyService]
 })
 export class AppComponent {
   title = 'ngspotify';

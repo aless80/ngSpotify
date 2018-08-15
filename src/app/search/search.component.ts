@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { SpotifyService } from '../spotify.service';
+import {Component, OnInit} from '@angular/core';
+import {SpotifyService} from '../spotify.service';
+
+
+import { Observable, of } from 'rxjs'; //Observable returned with asynch operation
+import { catchError, tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'search',
@@ -8,25 +13,22 @@ import { SpotifyService } from '../spotify.service';
 })
 export class SearchComponent implements OnInit {
   
-  searchStr: string;
+  SearchStr: string;
 
-  searchMusic(){
-    this._spotifyService.seachMusic(this.searchStr)
+  constructor(private _spotifyService:SpotifyService) { 
+  }
+
+  searchMusic() {
+    this._spotifyService.searchMusic(this.SearchStr)
         .subscribe(res => {
-          console.log(res.artists.items);
+          catchError((e) => this.handleError(e)),
+          console.log(res);//.artists.items);
         });
   }
-/*
-  searchMusic() {
-    this._spotifyService.searchMusic(this.searchStr).subscribe(res => {
-        this.searchRes = res.artists.items;
-    });
+  private handleError(error: any): Observable<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return of(error.message || error);
   }
-  */
-
-  constructor(private _spotifyService:SpotifyService) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
 }
