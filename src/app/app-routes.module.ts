@@ -4,8 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
-import { RouterConfigLoader } from '@angular/router/src/router_config_loader';
-import { provideRouterInitializer } from '@angular/router/src/router_module';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },

@@ -16,7 +16,6 @@ import { LoginSpotifyComponent } from '../login-spotify/login-spotify.component'
     NavbarComponent,
     AboutComponent,
     SearchComponent,
-    LoginSpotifyComponent
   ],
   imports: [
     BrowserModule,
