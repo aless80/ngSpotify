@@ -8,7 +8,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AboutComponent } from './about/about.component';
 import { AppRoutesModule } from './app-routes.module';
 import { SearchComponent } from './search/search.component';
-import { LoginSpotifyComponent } from '../login-spotify/login-spotify.component';
 
 @NgModule({
   declarations: [
