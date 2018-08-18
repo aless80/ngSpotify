@@ -14,7 +14,6 @@ const routes: Routes = [
   provideRouter(routes);
 ]*/
 
-
 @NgModule({
   exports: [ RouterModule ],
   imports: [
