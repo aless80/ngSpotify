@@ -4,7 +4,10 @@ import {SpotifyService} from '../spotify.service';
 
 import { Observable, of } from 'rxjs'; //Observable returned with asynch operation
 import { catchError, tap } from 'rxjs/operators';
+import { Artist } from '../../../Artist';
 
+//https://stackoverflow.com/questions/41879145/get-an-users-playlist-with-spotify-api-how-to-add-access-token-in-http-request
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'search',
@@ -14,17 +17,19 @@ import { catchError, tap } from 'rxjs/operators';
 export class SearchComponent implements OnInit {
   
   SearchStr: string;
+  SearchRes: Artist[];
 
-  constructor(private _spotifyService:SpotifyService) { 
-  }
+  constructor(private _spotifyService:SpotifyService) { }
 
-  searchMusic() {
+  search() {
     this._spotifyService.searchMusic(this.SearchStr)
         .subscribe(res => {
           //catchError((e) => this.handleError(e)),
           console.log(res);//.artists.items);
+          //this.SearchRes = res.artists.items;
         });
   }
+  
   private handleError(error: any): Observable<any> {
     console.error('An error occurred', error); // for demo purposes only
     return of(error.message || error);

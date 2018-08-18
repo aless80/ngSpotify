@@ -8,9 +8,9 @@ import { RouterConfigLoader } from '@angular/router/src/router_config_loader';
 import { provideRouterInitializer } from '@angular/router/src/router_module';
 
 const routes: Routes = [
-  //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' }, //default to dashboard component
-  { path: '', component: SearchComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'about', component: AboutComponent },
+  { path: '', redirectTo: '/search', pathMatch: 'full' }, //default to dashboard component
 ];
 /*export const AppRouterProviders = [
   provideRouter(routes);
