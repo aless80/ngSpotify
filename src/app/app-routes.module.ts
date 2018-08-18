@@ -8,7 +8,7 @@ import { AboutComponent } from './about/about.component';
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'about', component: AboutComponent },
-  { path: '', redirectTo: '/search', pathMatch: 'full' }, //default to dashboard component
+  { path: '', redirectTo: '/search', pathMatch: 'full' },
 ];
 /*export const AppRouterProviders = [
   provideRouter(routes);
