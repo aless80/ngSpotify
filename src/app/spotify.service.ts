@@ -20,7 +20,7 @@ export class SpotifyService {
   }
   
   searchMusic(str: string, type = 'artist') {
-    const accessToken = 'ZTNmNjVkODliNjdiNDVlYmEzYWZjYTRkOTc1OTUyNzU6MjAzOGFhNDkyMTNhNGZhMTg2MDY4YWMyMDMxMjk3Zjg=';
+    const accessToken = 'BQC_lBxoN9ABVb0R5fuszVCMg43Fvifu8VkZ6zai9OIirJrETv6HbBl0F_4lhKDnmnrW9SGa6JwmYqIEkQY';
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization',  'Bearer ' + accessToken);
