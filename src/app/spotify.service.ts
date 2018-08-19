@@ -13,18 +13,18 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SpotifyService {
+  private accessToken: string;
   private searchUrl: string;
+  private artistUrl: string;
+  private albumsUrl: string;  
 
-  constructor(private _http: Http) {
-
-  }
+  constructor(private _http: Http) {  }
   
-  //get token easily: https://developer.spotify.com/console/get-search-item/?q=tania%20bowra&type=artist&market=&limit=&offset=
-
-  searchMusic(accessToken: string, searchstr: string, type = 'artist') {
+  searchMusic(accesstoken: string, searchstr: string, type = 'artist') {
+    this.accessToken = accesstoken;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('Authorization',  'Bearer ' + accessToken);
+    headers.append('Authorization',  'Bearer ' + accesstoken);
     let options = new RequestOptions({ headers: headers });
     this.searchUrl = 'https://api.spotify.com/v1/search?query='+searchstr
                     +'&offset=0&limit=20&type='+type+'&market=US';
@@ -36,8 +36,37 @@ export class SpotifyService {
       );
   }
 
+  getArtist(id: string) {
+    this.artistUrl = 'https://api.spotify.com/v1/artists/'+id;
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization',  'Bearer ' + this.accessToken);
+    let options = new RequestOptions({ headers: headers });
+    return this._http.get(this.artistUrl, options)
+      .pipe(
+        //tap(res => console.log(this)),
+        //catchError((e) => this.handleError(e)),
+        map(res => res.json())
+      );
+  }
+  
+  getAlbums(artistId: string) {    
+    console.log('this.accessToken exists: ', typeof this.accessToken !== "undefined"))
+    this.albumsUrl = 'https://api.spotify.com/v1/artists/'+artistId+'/albums';
+    console.log('this.albumsUrl:\n'+this.albumsUrl)
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization',  'Bearer ' + this.accessToken);
+    let options = new RequestOptions({ headers: headers });
+    return this._http.get(this.albumsUrl, options)
+      .pipe(
+        //tap(res => console.log(this)),
+        //catchError((e) => this.handleError(e)),
+        map(res => res.json())
+      );
+  }
 
-  //use the url as a link
+  //stackoverflow: use the url as a link
   searchMusicCORS(str: string, type = 'Artist') {
     var scopes = 'user-read-private user-read-email';
     const my_client_id = 'e3f65d89b67b45eba3afca4d97595275';
@@ -48,14 +77,12 @@ export class SpotifyService {
       //(scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
       '&redirect_uri=' + encodeURIComponent(redirect_uri) + 
       '&scope=user-read-private%20user-read-email&response_type=token&state=123'
-
-
     return this._http.get(this.searchUrl)
       .pipe(
         map(res => console.log(res))
       )
-    }
-  
+  }
+    
   private handleError2(error: any): Observable<any> {
     console.error('An error occurred', error); // for demo purposes only
     return of(error.message || error);
