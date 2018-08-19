@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { AppRoutesModule } from './app-routes.module';
 import { SearchComponent } from './search/search.component';
 import { ArtistComponent } from './artist/artist.component';
+import { AlbumComponent } from './album/album.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ArtistComponent } from './artist/artist.component';
     AboutComponent,
     SearchComponent,
     ArtistComponent,
+    AlbumComponent,
   ],
   imports: [
     BrowserModule,
