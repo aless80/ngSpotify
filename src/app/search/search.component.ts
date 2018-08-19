@@ -26,8 +26,6 @@ export class SearchComponent implements OnInit {
     this._spotifyService.searchMusic(this.accessToken, this.searchStr)
         .subscribe(res => {
           //catchError((e) => this.handleError(e)),
-          console.log('res.artists.items:');
-          console.log(res.artists.items);
           this.searchRes = res.artists.items;
         });
   }

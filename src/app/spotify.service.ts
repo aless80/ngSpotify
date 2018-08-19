@@ -37,6 +37,7 @@ export class SpotifyService {
   }
 
   getArtist(id: string) {
+    console.log('this.accessToken exists: ', typeof this.accessToken !== "undefined")
     this.artistUrl = 'https://api.spotify.com/v1/artists/'+id;
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -44,25 +45,24 @@ export class SpotifyService {
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.artistUrl, options)
       .pipe(
-        //tap(res => console.log(this)),
-        //catchError((e) => this.handleError(e)),
         map(res => res.json())
       );
   }
   
   getAlbums(artistId: string) {    
-    console.log('this.accessToken exists: ', typeof this.accessToken !== "undefined"))
+    console.log('this.accessToken exists: ', typeof this.accessToken !== "undefined")
     this.albumsUrl = 'https://api.spotify.com/v1/artists/'+artistId+'/albums';
-    console.log('this.albumsUrl:\n'+this.albumsUrl)
+  console.log('this.albumsUrl:\n'+this.albumsUrl)
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization',  'Bearer ' + this.accessToken);
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.albumsUrl, options)
       .pipe(
-        //tap(res => console.log(this)),
-        //catchError((e) => this.handleError(e)),
-        map(res => res.json())
+        map(res => {
+          console.log(res.json())
+          res.json()
+        })
       );
   }
 
