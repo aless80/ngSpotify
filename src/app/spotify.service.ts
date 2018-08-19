@@ -22,7 +22,6 @@ export class SpotifyService {
   //get token easily: https://developer.spotify.com/console/get-search-item/?q=tania%20bowra&type=artist&market=&limit=&offset=
 
   searchMusic(accessToken: string, searchstr: string, type = 'artist') {
-    ///const accessToken = 'BQBxD2e9txuY7NUMAQkymaF0P4amjFRHR_HkVr9VvFWxnUWD7AysQp_N1949ouVHjY_P6GKPGCUoye04rd0G1X2oDCUozralITvJ1RODqYYtZV1FZuS_DYNHEyEHpR5XK6ChKK0hhr0';
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization',  'Bearer ' + accessToken);
