@@ -59,10 +59,7 @@ export class SpotifyService {
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.albumsUrl, options)
       .pipe(
-        map(res => {
-          console.log(res.json())
-          res.json()
-        })
+        map(res => res.json())
       );
   }
 
