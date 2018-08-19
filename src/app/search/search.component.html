@@ -2,12 +2,18 @@
 <p class="lead">Use the ngSpotify app to browse new releases and find your favorite songs<br>All you get is this text and a mostly barebones HTML document </p>
 <form>
   <div class="form-group">
-    <input type="text" name="searchStr" (keyup)="search()" [(ngModel)]="searchStr" class="form-control is-valid" placeholder="Search Music">
-    </div>
+    <p>Insert the access token (easily find it 
+      <a href="https://developer.spotify.com/console/get-search-item/?q=tania+bowra&type=artist#oauth-input" target="_blank">here</a>)
+      </p>
+    <input id="accessToken" type="text" name="accessToken" [(ngModel)]="accessToken" class="form-control is-valid" 
+      placeholder="Spotify access token">
+    <br>
+    <input style="max-width: 50%;" type="text" name="searchStr" (keyup)="search()" [(ngModel)]="searchStr" class="form-control is-valid" placeholder="Search Music">
+  </div>
 </form>
 
-<div *ngIf="SearchRes">
-  <div *ngFor="let res of SearchRes">
+<div *ngIf="searchRes">
+  <div *ngFor="let res of searchRes">
     <div class="row">
       <div class="col-md-12">
         <div class="search-res well">

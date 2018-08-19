@@ -16,17 +16,19 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 })
 export class SearchComponent implements OnInit {
   
-  SearchStr: string;
-  SearchRes: Artist[];
+  searchStr: string;
+  searchRes: Artist[];
+  accessToken: string = '';
 
   constructor(private _spotifyService:SpotifyService) { }
 
   search() {
-    this._spotifyService.searchMusic(this.SearchStr)
+    this._spotifyService.searchMusic(this.accessToken, this.searchStr)
         .subscribe(res => {
           //catchError((e) => this.handleError(e)),
-          console.log(res);//.artists.items);
-          //this.SearchRes = res.artists.items;
+          console.log('res.artists.items:');
+          console.log(res.artists.items);
+          this.searchRes = res.artists.items;
         });
   }
   

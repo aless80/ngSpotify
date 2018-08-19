@@ -18,41 +18,45 @@ export class SpotifyService {
   constructor(private _http: Http) {
 
   }
+  
+  //get token easily: https://developer.spotify.com/console/get-search-item/?q=tania%20bowra&type=artist&market=&limit=&offset=
+
+  searchMusic(accessToken: string, searchstr: string, type = 'artist') {
+    ///const accessToken = 'BQBxD2e9txuY7NUMAQkymaF0P4amjFRHR_HkVr9VvFWxnUWD7AysQp_N1949ouVHjY_P6GKPGCUoye04rd0G1X2oDCUozralITvJ1RODqYYtZV1FZuS_DYNHEyEHpR5XK6ChKK0hhr0';
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization',  'Bearer ' + accessToken);
+    let options = new RequestOptions({ headers: headers });
+    this.searchUrl = 'https://api.spotify.com/v1/search?query='+searchstr
+                    +'&offset=0&limit=20&type='+type+'&market=US';
+    return this._http.get(this.searchUrl, options)
+      .pipe(
+        //tap(res => console.log(this)),
+        //catchError((e) => this.handleError(e)),
+        map(res => res.json())
+      );
+  }
+
+
   //use the url as a link
-  searchMusic(str: string, type = 'Artist') {
+  searchMusicCORS(str: string, type = 'Artist') {
     var scopes = 'user-read-private user-read-email';
     const my_client_id = 'e3f65d89b67b45eba3afca4d97595275';
     const redirect_uri = 'http://localhost:4200/'
     this.searchUrl = 'https://accounts.spotify.com/authorize' +
-      '?response_type=code' + '&client_id=' + my_client_id +
-      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-      '&redirect_uri=' + encodeURIComponent(redirect_uri)
+      //'?response_type=code' + '&client_id=' + my_client_id +
+      '?client_id=' + my_client_id +
+      //(scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+      '&redirect_uri=' + encodeURIComponent(redirect_uri) + 
+      '&scope=user-read-private%20user-read-email&response_type=token&state=123'
 
-      /*app.get('/login', function(req, res) {      
-        res.redirect();
-      });*/
 
     return this._http.get(this.searchUrl)
       .pipe(
         map(res => console.log(res))
       )
     }
-
-    searchMusicORIG(str: string, type = 'artist') {
-    const accessToken = 'BQC_lBxoN9ABVb0R5fuszVCMg43Fvifu8VkZ6zai9OIirJrETv6HbBl0F_4lhKDnmnrW9SGa6JwmYqIEkQY';
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization',  'Bearer ' + accessToken);
-    let options = new RequestOptions({ headers: headers });
-    this.searchUrl = 'https://api.spotify.com/v1/search?query='+str+'&offset=0&limit=20&type='+type+'&market=US';
-    return this._http.get(this.searchUrl, options)
-      .pipe(
-        tap(res => console.log(this)),
-        catchError((e) => this.handleError(e)),
-      map(res => res.json())
-      );
-  }
-
+  
   private handleError2(error: any): Observable<any> {
     console.error('An error occurred', error); // for demo purposes only
     return of(error.message || error);
