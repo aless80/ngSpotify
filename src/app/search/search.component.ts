@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit {
           //catchError((e) => this.handleError(e)),
           this.searchRes = res.artists.items;
         });
+        console.log('this.searchRes:',this.searchRes)
   }
   
   private handleError(error: any): Observable<any> {
